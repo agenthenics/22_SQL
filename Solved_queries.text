@@ -1,0 +1,2 @@
+-- Write a query to find the 2nd highest salary from an employee table.
+=> SELECT MAX(salary) FROM `employee` where salary < (select MAX(salary) from employee) order by salary DESC;
