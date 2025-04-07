@@ -1,2 +1,25 @@
 -- Write a query to find the 2nd highest salary from an employee table.
 => SELECT MAX(salary) FROM `employee` where salary < (select MAX(salary) from employee) order by salary DESC;
+
+-- Write a SQL query to find employees who have the same manager. 
+Join => select e1.name as manager_name, e2.name as employee_name from employee as e1 inner join employee as e2 on e1.emp_id = e2.manager_id order by manager_name; 
+having => SELECT manager_id FROM Employee WHERE manager_id IS NOT NULL GROUP BY manager_id HAVING COUNT(*) > 1;
+
+-- Write a query to find the first and last record for each employee based on the• hire_date• column per Department 
+=> select emp_id,`name` as emp_name,`hire_date`,`dept_id` as dept_id,'First' as position from employee as e WHERE hire_date = ( SELECT MIN(hire_date) FROM Employee WHERE dept_id = e.dept_id )
+ UNION 
+ Select emp_id,name as emp_name, hire_date,dept_id,'Last' as position from employee as e WHERE hire_date = ( SELECT MAX(hire_date) FROM Employee WHERE dept_id = e.dept_id ) order by dept_id, Position;
+
+
+ -- Write a query to find the most recent transaction for each customer.
+ =>  SELECT c.customer_id as customer_id, c.name,MIN(ord.order_date) as order_date FROM `customer` as c inner join orders as ord on ord.customer_id = c.customer_id group by c.customer_id order by c.customer_id;
+
+ -- Write a to find the salary Of each department and display departments with a total salary greater than a specified value (e.g., 108000).
+ => SELECT`dept_name` as department,sum(emp.salary) as salary from department as depart INNER JOIN employee as emp on emp.dept_id = depart.dept_id group by dept_name HAVING SUM(salary) > 108000;
+
+ -- Write a query to find the running total of orders for each customer sorted by order date.
+=> SELECT cst.customer_id as customer_id,cst.name as customer_name , orders.order_id, orders.order_date, order_amount FROM `orders` inner join customer as cst on cst.customer_id = orders.customer_id order by customer_id,order_date;
+ ==> -- , SUM(orders.order_amount) OVER(PARTITION BY orders.customer_id ORDER BY orders.order_date) as running_total
+
+ Write a query to get the total number of employees hired per month and year.  
+ => SELECT COUNT(E.emp_id) AS NumberOfEmployees, MONTHNAME(E.hire_date) AS Month, YEAR(E.hire_date) AS Year FROM Employee AS E GROUP BY YEAR(E.hire_date), MONTH(E.hire_date) ORDER BY Year, MONTH(E.hire_date); 
