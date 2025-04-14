@@ -1,3 +1,5 @@
+C:\xampp\htdocs\22_SQL\Files_images
+
 -- Write a query to find the 2nd highest salary from an employee table.
 => SELECT MAX(salary) FROM `employee` where salary < (select MAX(salary) from employee) order by salary DESC;
 
@@ -23,3 +25,18 @@ having => SELECT manager_id FROM Employee WHERE manager_id IS NOT NULL GROUP BY 
 
  Write a query to get the total number of employees hired per month and year.  
  => SELECT COUNT(E.emp_id) AS NumberOfEmployees, MONTHNAME(E.hire_date) AS Month, YEAR(E.hire_date) AS Year FROM Employee AS E GROUP BY YEAR(E.hire_date), MONTH(E.hire_date) ORDER BY Year, MONTH(E.hire_date); 
+
+
+ Write a query to display all employees who earn more than the average salary for their department.
+ => SELECT e.name, e.salary,d.dept_name FROM `employee` as e JOIN department as d on d.dept_id = e.dept_id where e.salary > (SELECT AVG(salary) from employee) group by d.dept_name;
+
+ Write a query to get the second-lowest salary from the employee table without using LIMIT or OFFSET.
+ =>SELECT max(salary) as second_lowest_salary from employee where salary < (select MAX(salary) from employee);
+
+ Write a query to list all products that have never• been ordered (assming an orders table and a 'products' table)
+ => SELECT DISTINCT p.product_name FROM `product`  as p where p.product_id NOT IN (Select DISTINCT product_id from orderdetails);
+
+ Write a query to list all the employees who are also manager.
+ =>select DISTINCT name from employee where emp_id IN (select DISTINCT manager_id from employee);
+
+ Write a query to find employees who have joined in the same month and year.
